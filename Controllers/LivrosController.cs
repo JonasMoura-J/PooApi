@@ -72,8 +72,7 @@ namespace PooApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Livros
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
         [HttpPost]
         public async Task<ActionResult<Livro>> PostLivro(Livro livro)
         {

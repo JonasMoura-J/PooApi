@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace PooApi
 {
@@ -13,11 +14,25 @@ namespace PooApi
     {
         public static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
+            try {
+            Log.Information("Iniciando WebApi");
             CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex){
+                Log.Fatal(ex, "Error");
+                throw;
+            }
+            finally {
+                Log.CloseAndFlush();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
