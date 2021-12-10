@@ -35,9 +35,11 @@ namespace PooApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PooApi.Livros.Api", Version = "v1" });
                 var filePath = System.IO.Path.Combine(System.AppContext.BaseDirectory, "PooApi.Livros.Api.xml");
             });
+
+            string dbConnection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlite(Configuration.GetConnectionString("Sqlite"));
+                options.UseSqlite(dbConnection);
             });
 
         }
